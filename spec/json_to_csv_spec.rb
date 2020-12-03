@@ -2,26 +2,65 @@ require 'json'
 require 'csv'
 require 'ostruct'
 
-describe "Verifying json file" do
-  file_path = File.expand_path('resources/json/users.json')
+puts "Verifying json file"
 
-  it "Should be an existing users.json file in resources folder" do
-    expect(File.exist?(file_path)).to be true
+file_path = File.expand_path('resources/json/users.json')
+
+puts "It should be an existing users.json file in resources folder"
+
+  if File.exist?(file_path)
+    puts "\e[32mtrue\e[0m"
+  else
+    puts "\e[31mfile doesn't exist\e[0m"
   end
 
-  it "Should be good format json" do
-    file = File.open(file_path)
-    users = JSON.load file
-    users = JSON.parse(users.to_json, object_class: OpenStruct)
+puts "It should be good format json"
 
-    users.each do |user|
-      expect(user.id).to be_an(Integer)
-      expect(user.email).to be_an(String)
-      expect(user.tags).to be_an(Array)
-      expect(user.profiles.facebook.id).to be_an(Integer)
-      expect(user.profiles.facebook.picture).to be_an(String)
-      expect(user.profiles.twitter.id).to be_an(Integer)
-      expect(user.profiles.twitter.picture).to be_an(String)
+  file = File.open(file_path)
+  users = JSON.load file
+  users = JSON.parse(users.to_json, object_class: OpenStruct)
+
+  no_break = true
+
+  users.each_with_index do |user, index|
+    unless user.id.is_a? Integer
+      puts "\e[31mid value is not an integer or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.email.is_a? String
+      puts "\e[31memail value is not a String or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.tags.is_a? Array
+      puts "\e[31mtags value is not an Array or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.profiles.facebook.id.is_a? Integer
+      puts "\e[31mfacebook id value is not an Integer or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.profiles.facebook.picture.is_a? String
+      puts "\e[31mfacebook picture value is not an string or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.profiles.twitter.id.is_a? Integer
+      puts "\e[31mtwitter id value is not an Integer or nil, array index #{index}\e[0m"
+      no_break = false
+      break
+    end
+    unless user.profiles.twitter.picture.is_a? String
+      puts "\e[31mtwitter picture value is not an string or nil, array index #{index}\e[0m"
+      no_break = false
+      break
     end
   end
+  
+if no_break
+  puts "\e[32mtrue\e[0m"
+  puts "\e[32m0 failures good job\e[0m" 
 end

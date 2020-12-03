@@ -8,8 +8,7 @@ Ruby version 2.5.7.
 
 You can run tests whith :
 
-	bundle install
-	bundle exec rspec
+	ruby spec/json_to_csv_spec.rb
 
 ## Run
 

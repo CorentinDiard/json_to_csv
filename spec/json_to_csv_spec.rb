@@ -12,6 +12,7 @@ puts "It should be an existing users.json file in resources folder"
     puts "\e[32mtrue\e[0m"
   else
     puts "\e[31mfile doesn't exist\e[0m"
+    exit
   end
 
 puts "It should be good format json"
@@ -59,8 +60,8 @@ puts "It should be good format json"
       break
     end
   end
-  
+
 if no_break
   puts "\e[32mtrue\e[0m"
-  puts "\e[32m0 failures good job\e[0m" 
+  puts "\e[32m0 failure good job\e[0m" 
 end
